@@ -1,0 +1,38 @@
+{
+    "configs": {
+        "CONFIG-0": {
+            "datatype": "dcm_series",
+            "description": "MRL Geometric Fidelity 7-slab",
+            "filename": "config_0_0.json",
+            "metafilename": "config_0_0.json",
+            "module": "MODULE-0",
+            "name": "MRL Geometric Fidelity",
+            "origin": "user"
+        },
+        "CONFIG-1": {
+            "datatype": "dcm_series",
+            "description": "MRL Geometric Fidelity 7-slab",
+            "filename": "config_0_1.json",
+            "metafilename": "config_0_1.json",
+            "module": "MODULE-0",
+            "name": "MRL Geometric Fidelity",
+            "origin": "user"
+        }
+    },
+    "info": {
+        "dbversion": "20200207",
+        "magic": "wad-qc-export"
+    },
+    "modules": {
+        "MODULE-0": {
+            "description": "MRL Geometric Fidelity 7-slab",
+            "executable": "MRL_GeomAcc_wadwrapper.py",
+            "folder": "module_0",
+            "name": "MRL Geometric Fidelity",
+            "origin": "user",
+            "repo_url": "",
+            "repo_version": ""
+        }
+    },
+    "selectors": {}
+}
