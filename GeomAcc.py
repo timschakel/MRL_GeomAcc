@@ -14,7 +14,6 @@
 # 20210623: initial version
 # 20210820: remove obsolete code
 
-import os
 import numpy as np
 from scipy import optimize
 from scipy.spatial.distance import cdist
@@ -498,7 +497,7 @@ class GeomAcc():
         ax.set_facecolor('white')
         ax.set_title(cc_position)
 
-        ax.hist((differences[:, self.AP],differences[:, self.LR],differences[:, self.CC]), bins=bins, normed=False,
+        ax.hist((differences[:, self.AP],differences[:, self.LR],differences[:, self.CC]), bins=bins, density=False,
                 label=('AP', 'LR', 'CC'), color=['green', 'blue', 'red'],rwidth=0.66)
         ax.text(0.05, 0.95, textstr, transform=ax.transAxes, fontsize=14,
                 verticalalignment='top', bbox=textstrprops)
