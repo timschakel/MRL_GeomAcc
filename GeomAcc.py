@@ -17,6 +17,7 @@
 import numpy as np
 from scipy import optimize
 from scipy.spatial.distance import cdist
+from scipy.ndimage.filters import gaussian_filter
 import logging
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
@@ -141,7 +142,11 @@ class GeomAcc():
 
     def _getHighVoxelsFromImageData(self, imageData):
         logger.log(logging.INFO, "Filtering dataset")
-        idx = np.argwhere(imageData > self.MARKER_THRESHOLD_AFTER_FILTERING).T
+        
+        sigma = 2.5
+        dataCube = gaussian_filter(imageData, sigma, truncate=5)/ np.sqrt(2*np.pi * sigma**2)
+        idx = np.argwhere(dataCube > np.percentile(dataCube,99.5)).T
+        #idx = np.argwhere(imageData > self.MARKER_THRESHOLD_AFTER_FILTERING).T
         return idx
 
 
@@ -191,10 +196,10 @@ class GeomAcc():
         """
         logger.log(logging.INFO, "Correcting for phantom setup")
 
-        #Select only markers within 80 mm of isoc
+        #Select only markers within 100 mm of isoc
         detected_markers_at_isoc_plane = self.detectedMarkerPositions[self.indices_cc_pos(self.detectedMarkerPositions,cc_pos=0.0)]
         dist_to_isoc_2d = cdist([[0.0, 0.0]], detected_markers_at_isoc_plane[:,:-1], metric='euclidean')[0]
-        ix=dist_to_isoc_2d<80
+        ix=dist_to_isoc_2d<100
 
         detected_markers_at_isoc_plane=detected_markers_at_isoc_plane[ix]
         markers_at_isoc_plane = self.__marker_positions_at_cc_pos(0.0, self.positions_LR_AP)
@@ -268,13 +273,16 @@ class GeomAcc():
 
     def calculateDistanceToDifference(self, markerIdxs, limit_in_mm):
         """
-        This function calculates the distance from to origin (0,0,0) to the 
+        This function calculates the distance from to origin (0,0,cc_pos) to the 
         closest marker location which has a certain defined deviation.
+        Calculation is per slice (cc_pos)
+        
         Input: 
         markerIdxs: the indices of the markers to consider 
         (obtained eg: markerIdxs = GeomAcc.indices_cc_pos(GeomAcc.correctedMarkerPositions,cc_position))
         limit_in_mm: the defined deviation, function will locate the first marker 
         that exceeds this deviation in its detected position.
+        
         Output:
         distance_to_difference: the distance from the origin to the found marker
         """
@@ -296,6 +304,80 @@ class GeomAcc():
         dist_origin = np.sqrt(np.power(markerpos[0], 2)+np.power(markerpos[1], 2))
         
         return dist_origin, markerpos_ix
+    
+    def calculateDistanceToDifference3D(self, limit_in_mm):
+        """
+        This function calculates the distance from to origin (0,0,0) to the 
+        closest marker location which has a certain defined deviation.
+        Calculation is in 3D for entire volume
+        
+        Input: 
+        markerIdxs: the indices of the markers to consider 
+        limit_in_mm: the defined deviation, function will locate the first marker 
+        that exceeds this deviation in its detected position.
+        
+        Output:
+        distance_to_difference: the distance from the origin to the found marker
+        """
+        
+        # calculate distance to origin and sort based on this
+        detected = self.correctedMarkerPositions
+        origin = [[0.0,0.0,0.0]]
+        detected_dist_to_origin = cdist(detected,origin).flatten()
+        detected_dist_to_origin_sortix = np.argsort(detected_dist_to_origin)
+        
+        # calculate the difference lengths and find the first difference length 
+        # that exceeds the limit (after sorting the list using the previous indices)
+        difference = self.differencesCorrectedExpected
+        difference_length = np.sqrt( difference[:,0]**2 + difference[:,1]**2 + difference[:,2]**2 )
+        limit_ix = np.argmax(difference_length[detected_dist_to_origin_sortix] > limit_in_mm)
+        
+        # take the index for the first marker to exceed limit
+        # and calculate its distance from the origin
+        markerposition = detected[detected_dist_to_origin_sortix][limit_ix]
+        marker_dist_to_origin = np.sqrt( markerposition[0]**2 + markerposition[1]**2 + markerposition[2]**2 )
+
+        # Also get the marker that gives the radius for which 98% of the markers are within the limit
+        # (according to longitudinal QA article)
+        # For this, consider the max we just found to be 98% instead of the max (100%)
+        ix_98 = np.int0(np.floor(100*limit_ix/98))
+        markerposition_98 = detected[detected_dist_to_origin_sortix][ix_98]
+        marker98_dist_to_origin = np.sqrt( markerposition_98[0]**2 + markerposition_98[1]**2 + markerposition_98[2]**2 )
+                
+        return marker_dist_to_origin, marker98_dist_to_origin
+    
+    
+    def calculateStatisticsForDSV3D(self, diameter):
+        """
+        Calculate some statistics for the markers within a specified sphere (DSV)
+        
+        Markers are selected based on their detected position
+        
+        ----------
+
+        diameter : float
+            diameter of the DSV (mm)
+
+        Returns
+        -------
+        dsv_max: Max deviation length (3D) within specified DSV.
+        dsv_p98: 98th percentile value of all deviations (3D length) within specified DSV
+
+        """
+        detected = self.correctedMarkerPositions
+        differences = self.differencesCorrectedExpected
+        
+        detected_dist_to_origin = np.sqrt(np.power(detected[:,0], 2)+np.power(detected[:,1], 2)+np.power(detected[:,2], 2))
+        dsv_ix = detected_dist_to_origin < diameter/2
+        
+        # for every detected marker in the given diameter, take 3D distance length of difference with expected
+        distlength = np.sqrt(np.sum(np.power(differences[dsv_ix], 2), axis=1))  
+        
+        dsv_max = np.max(distlength)
+        dsv_p98 = np.percentile(distlength,98)
+        dsv_p95 = np.percentile(distlength,95)
+        
+        return dsv_max, dsv_p98, dsv_p95
     
     def calculateStatisticsForDSV(self, markerIdxs, diameter):
         """
@@ -355,10 +437,9 @@ class GeomAcc():
         correctedDistancesToIsoc = cdist([[0.0,0.0,0.0]],detectedMarkerPositions,metric='euclidean')[0]
         order_distances=np.argsort(correctedDistancesToIsoc)
 
-        #find the
+        #find the first exceeding the limit
         idx_first_exceeding = np.argmax(cdist([[0.0,0.0,0.0]],differences[order_distances],metric='euclidean')[0]>limit_in_mm)
         return (correctedDistancesToIsoc[order_distances])[idx_first_exceeding]
-
 
     def save_images_to_wad(self,results):
         logger.log(logging.INFO, "Creating and saving figures")
@@ -375,9 +456,9 @@ class GeomAcc():
         results.addObject(description="Logfile", value='GeomAcc', level=2)
 
     def createDeviationFigure(self,fileName=None):
-        fig, axs = plt.subplots(ncols=2, nrows=4, sharey=True, sharex=True,figsize=(12, 18))
+        fig, axs = plt.subplots(ncols=2, nrows=4, sharey=True, sharex=True,figsize=(8, 12))
         title = self.studyDate.strftime("%Y-%m-%d ") +self.studyTime.strftime("%H:%M:%S ") +" "+str(self.studyScanner)
-        fig.suptitle(title,fontsize=24,x=0.75)
+        fig.suptitle(title,fontsize=20,x=0.75)
 
         self._createDeviationSubplot(ax=axs[0, 0], cc_position=self.positions_CC[3])
         self._createDeviationLegend (ax=axs[0, 1])
@@ -396,7 +477,7 @@ class GeomAcc():
             fileName = 'GNL Deviations '+self.studyDate.strftime("%Y-%m-%d ")+'.pdf'
         logging.log(logging.INFO, 'saving file:' + fileName)
         plt.subplots_adjust(top=.95)
-        fig.savefig(fileName,dpi=160)
+        fig.savefig(fileName,dpi=150)
 
     def _createDeviationSubplot(self, ax, cc_position):
         ix = self.indices_cc_pos(self.correctedMarkerPositions,cc_position)
@@ -425,13 +506,30 @@ class GeomAcc():
         ax.scatter(0,0,marker='x', c='white')
         
         # draw circles with radius with distance where closest marker with deviation larger than 1mm (white) & 2mm (orange) 
-        dist_origin, markerpos_ix = self.calculateDistanceToDifference(ix, 1)
-        draw_circle = plt.Circle((0,0),dist_origin,fill=False,color='yellowgreen',lw=3)
-        ax.add_artist(draw_circle)
+        #dist_origin, markerpos_ix = self.calculateDistanceToDifference(ix, 1)
+        #draw_circle = plt.Circle((0,0),dist_origin,fill=False,color='yellowgreen',lw=3)
+        #ax.add_artist(draw_circle)
         
-        dist_origin, markerpos_ix = self.calculateDistanceToDifference(ix, 2)
-        draw_circle = plt.Circle((0,0),dist_origin,fill=False,color='orange',lw=3)
-        ax.add_artist(draw_circle)
+        #dist_origin, markerpos_ix = self.calculateDistanceToDifference(ix, 2)
+        #draw_circle = plt.Circle((0,0),dist_origin,fill=False,color='orange',lw=3)
+        #ax.add_artist(draw_circle)
+        
+        # Alternative: draw circles based on the 3D DSV
+        # the radius of the spheres at the intersections with the phantom slices are given by:
+        # radius(z) = sqrt(R^2 - z^2), with R the radius of the current sphere
+        radius_1mm, radius_98p_1mm = self.calculateDistanceToDifference3D(1.0)
+        radius_2mm, radius_98p_2mm = self.calculateDistanceToDifference3D(2.0)
+        
+        # first check if the current cc_pos intersects with sphere
+        if radius_1mm**2 - cc_position**2 > 0:
+            radius_1mm_this_cc_pos = np.sqrt(radius_1mm**2 - cc_position**2)
+            draw_circle = plt.Circle((0,0),radius_1mm_this_cc_pos,fill=False,color='yellowgreen',lw=3)
+            ax.add_artist(draw_circle)
+            
+        if radius_2mm**2 - cc_position**2 > 0:
+            radius_2mm_this_cc_pos = np.sqrt(radius_2mm**2 - cc_position**2)
+            draw_circle = plt.Circle((0,0),radius_2mm_this_cc_pos,fill=False,color='orange',lw=3)
+            ax.add_artist(draw_circle)
         
 
     def _createDeviationLegend(self,ax):
@@ -452,10 +550,10 @@ class GeomAcc():
         ax.set_axis_off()
 
     def createHistogramsFigure(self, fileName):
-        fig, axs = plt.subplots(ncols=2, nrows=4, sharey=True, sharex=True,figsize=(12,18))
+        fig, axs = plt.subplots(ncols=2, nrows=4, sharey=True, sharex=True,figsize=(8,12))
 
         title = self.studyDate.strftime("%Y-%m-%d ") + self.studyTime.strftime("%H:%M:%S ") + " " + str(self.studyScanner)
-        fig.suptitle(title, fontsize=24)
+        fig.suptitle(title, fontsize=20)
         fig.subplots_adjust(top=1)
         self._createHistogramPlot(ax=axs[0, 0], cc_position=self.positions_CC[3])
         self._createHistogramLegend(ax=axs[0,1])
@@ -475,13 +573,13 @@ class GeomAcc():
         # fig.xlabel('mm')
         logging.log(logging.INFO, 'saving file:' + fileName)
         plt.subplots_adjust(top=.95)
-        fig.savefig(fileName,dpi=160)
+        fig.savefig(fileName,dpi=150)
 
     def _createHistogramPlot(self, ax, cc_position):
         ix = self.indices_cc_pos(self.correctedMarkerPositions, cc_position)
         differences = self.differencesCorrectedExpected[ix]
 
-        bins = np.linspace(start=-3, stop=3, num=13)
+        bins = np.linspace(start=-3, stop=3, num=14)
 
         mu_diff = np.mean(differences, axis=0)
 

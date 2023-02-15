@@ -11,345 +11,328 @@
             "description": "date and time of acquisition",
             "display_level": 2,
             "display_name": "DateTime",
+            "display_position": 0,
             "units": ""
         },
         "detectedPositions": {
             "description": "",
             "display_level": 2,
             "display_name": "",
-            "display_position": 0,
-            "constraint_is_active": false,
             "units": ""
         },
         "Histograms": {
             "description": "",
             "display_level": 2,
             "display_name": "",
-            "display_position": 0,
-            "constraint_is_active": false,
             "units": ""
+        },
+        "Total DSV to 1 mm (3D)": {
+            "description": "",
+            "display_level": 2,
+            "display_name": "Total DSV to 1 mm deviation (3D)",
+            "display_position": 1,
+            "units": "mm"
+        },
+		"Total DSV to 2 mm (3D)": {
+            "description": "",
+            "display_level": 2,
+            "display_name": "Total DSV to 2 mm deviation (3D)",
+            "display_position": 2,
+            "units": "mm"
         },
         "mean diff_-165.0": {
             "description": " ",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Mean deviation -165.0",
-            "units": ""
+            "display_position": 3,
+            "units": "mm"
         },
         "std diff_-165.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Stdev deviation -165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 4,
+            "units": "mm"
         },
-        "dist to 1mm_-165.0": {
+        "distance to 1mm_-165.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 1 mm deviation -165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 5,
+            "units": "mm"
         },
-        "dist to 2mm_-165.0": {
+        "distance to 2mm_-165.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 2 mm deviation -165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 6,
+            "units": "mm"
         },
         "DSV 400 max_-165.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 400 -165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV400 -165.0",
+            "display_position": 7,
+            "units": "mm"
         },
         "DSV 200 max_-165.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 200 -165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV200 -165.0",
+            "display_position": 8,
+            "units": "mm"
         },
         "mean diff_-110.0": {
             "description": " ",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Mean deviation -110.0",
-            "units": ""
+            "display_position": 9,
+            "units": "mm"
         },
         "std diff_-110.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Stdev deviation -110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 10,
+            "units": "mm"
         },
-        "dist to 1mm_-110.0": {
+        "distance to 1mm_-110.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 1 mm deviation -110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 11,
+            "units": "mm"
         },
-        "dist to 2mm_-110.0": {
+        "distance to 2mm_-110.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 2 mm deviation -110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 12,
+            "units": "mm"
         },
         "DSV 400 max_-110.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 400 -110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV400 -110.0",
+            "display_position": 13,
+            "units": "mm"
         },
         "DSV 200 max_-110.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 200 -110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV200 -110.0",
+            "display_position": 14,
+            "units": "mm"
         },
         "mean diff_-55.0": {
             "description": " ",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Mean deviation -55.0",
-            "units": ""
+            "display_position": 15,
+            "units": "mm"
         },
         "std diff_-55.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Stdev deviation -55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 16,
+            "units": "mm"
         },
-        "dist to 1mm_-55.0": {
+        "distance to 1mm_-55.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 1 mm deviation -55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 17,
+            "units": "mm"
         },
-        "dist to 2mm_-55.0": {
+        "distance to 2mm_-55.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 2 mm deviation -55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 18,
+            "units": "mm"
         },
         "DSV 400 max_-55.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 400 -55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV400 -55.0",
+            "display_position": 19,
+            "units": "mm"
         },
         "DSV 200 max_-55.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 200 -55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV200 -55.0",
+            "display_position": 20,
+            "units": "mm"
         },
         "mean diff_0.0": {
             "description": " ",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Mean deviation 0.0",
-            "units": ""
+            "display_position": 21,
+            "units": "mm"
         },
         "std diff_0.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Stdev deviation 0.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 22,
+            "units": "mm"
         },
-        "dist to 1mm_0.0": {
+        "distance to 1mm_0.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 1 mm deviation 0.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 23,
+            "units": "mm"
         },
-        "dist to 2mm_0.0": {
+        "distance to 2mm_0.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 2 mm deviation 0.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 24,
+            "units": "mm"
         },
         "DSV 400 max_0.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 400 0.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV400 0.0",
+            "display_position": 25,
+            "units": "mm"
         },
         "DSV 200 max_0.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 200 0.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV200 0.0",
+            "display_position": 26,
+            "units": "mm"
         },
         "mean diff_55.0": {
             "description": " ",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Mean deviation 55.0",
-            "units": ""
+            "display_position": 27,
+            "units": "mm"
         },
         "std diff_55.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Stdev deviation 55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 28,
+            "units": "mm"
         },
-        "dist to 1mm_55.0": {
+        "distance to 1mm_55.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 1 mm deviation 55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 29,
+            "units": "mm"
         },
-        "dist to 2mm_55.0": {
+        "distance to 2mm_55.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 2 mm deviation 55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 30,
+            "units": "mm"
         },
         "DSV 400 max_55.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 400 55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV400 55.0",
+            "display_position": 31,
+            "units": "mm"
         },
         "DSV 200 max_55.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 200 55.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV200 55.0",
+            "display_position": 32,
+            "units": "mm"
         },
         "mean diff_110.0": {
             "description": " ",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Mean deviation 110.0",
-            "units": ""
+            "display_position": 33,
+            "units": "mm"
         },
         "std diff_110.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Stdev deviation 110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 34,
+            "units": "mm"
         },
-        "dist to 1mm_110.0": {
+        "distance to 1mm_110.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 1 mm deviation 110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 35,
+            "units": "mm"
         },
-        "dist to 2mm_110.0": {
+        "distance to 2mm_110.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 2 mm deviation 110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 36,
+            "units": "mm"
         },
         "DSV 400 max_110.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 400 110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV400 110.0",
+            "display_position": 37,
+            "units": "mm"
         },
         "DSV 200 max_110.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 200 110.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV200 110.0",
+            "display_position": 38,
+            "units": "mm"
         },
         "mean diff_165.0": {
             "description": " ",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Mean deviation 165.0",
-            "units": ""
+            "display_position": 39,
+            "units": "mm"
         },
         "std diff_165.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Stdev deviation 165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 40,
+            "units": "mm"
         },
-        "dist to 1mm_165.0": {
+        "distance to 1mm_165.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 1 mm deviation 165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 41,
+            "units": "mm"
         },
-        "dist to 2mm_165.0": {
+        "distance to 2mm_165.0": {
             "description": "",
-            "display_level": 2,
+            "display_level": 1,
             "display_name": "Distance to 2 mm deviation 165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_position": 42,
+            "units": "mm"
         },
         "DSV 400 max_165.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 400 165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV400 165.0",
+            "display_position": 43,
+            "units": "mm"
         },
         "DSV 200 max_165.0": {
             "description": "",
-            "display_level": 2,
-            "display_name": "Max deviation in DSV 200 165.0",
-            "display_position": 0,
-            "constraint_is_active": false,
-            "units": ""
+            "display_level": 1,
+            "display_name": "Max deviation in DSV200 165.0",
+            "display_position": 44,
+            "units": "mm"
         }
     }
 }
